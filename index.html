@@ -42,29 +42,29 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
     // var x = d3.scale.linear().range([0, width]);
     // var y = d3.scale.linear().range([height, 0]);
 
-    var xScale = d3.scale.linear().range([margins.left, width - margins.right]).domain([d3.min(data, function(d) {
+    var x = d3.scale.linear().range([margins.left, width - margins.right]).domain([d3.min(data, function(d) {
         return d.year;
     }), d3.max(data, function(d) {
         return d.year;
     })]);
 
-    var yScale = d3.scale.linear().range([height - margins.top, margins.bottom]).domain([d3.min(data, function(d) {
+    var y = d3.scale.linear().range([height - margins.top, margins.bottom]).domain([d3.min(data, function(d) {
         return d.perfs;
     }), d3.max(data, function(d) {
         return d.perfs;
     })]);
 
     // Define the axes
-    var xAxis = d3.svg.axis().scale(xScale)
+    var xAxis = d3.svg.axis().scale(x)
         .orient("bottom").ticks(5).tickFormat(d3.format("d"));
 
-    var yAxis = d3.svg.axis().scale(yScale)
+    var yAxis = d3.svg.axis().scale(y)
         .orient("left").ticks(5);
 
     // Define the line
     var priceline = d3.svg.line()
-        .xScale(function(d) { return xScale(d.year); })
-        .yScale(function(d) { return yScale(d.perfs); });
+        .x(function(d) { return x(d.year); })
+        .y(function(d) { return y(d.perfs); });
         
     // Adds the svg canvas
     var svg = d3.select("body")
@@ -77,8 +77,8 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
 
 
     // Scale the range of the data
-    xScale.domain([0, d3.max(data, function(d) { return d.year; })]); 
-    yScale.domain([0, d3.max(data, function(d) { return d.perfs; })]); 
+    x.domain([0, d3.max(data, function(d) { return d.year; })]); 
+    y.domain([0, d3.max(data, function(d) { return d.perfs; })]); 
 
     // Nest the entries by symbol
     var dataNest = d3.nest()
