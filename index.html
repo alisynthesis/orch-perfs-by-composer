@@ -63,8 +63,8 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
 
     // Define the line
     var priceline = d3.svg.line()
-        .x(function(d) { return x(d.year); })
-        .y(function(d) { return y(d.perfs); });
+        .xScale(function(d) { return xScale(d.year); })
+        .yScale(function(d) { return yScale(d.perfs); });
         
     // Adds the svg canvas
     var svg = d3.select("body")
