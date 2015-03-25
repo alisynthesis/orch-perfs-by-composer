@@ -66,11 +66,7 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
 
     // Scale the range of the data
     x.domain(d3.extent(data, function(d) { return d.year; }));
-    y.domain([d3.min(data, function(d) {
-        return d.perfs;
-    }), d3.max(data, function(d) {
-        return d.perfs;
-    })]); 
+    y.domain(0 , 50); 
 
     // Nest the entries by symbol
     var dataNest = d3.nest()
