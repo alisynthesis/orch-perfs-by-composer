@@ -42,16 +42,10 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
     // var x = d3.scale.linear().range([0, width]);
     // var y = d3.scale.linear().range([height, 0]);
 
-    var x = d3.scale.linear().range([margins.left, width - margins.right]).domain([d3.min(data, function(d) {
-        return d.year;
-    }), d3.max(data, function(d) {
-        return d.year;
+    var x = d3.scale.linear().range([margins.left, width - margins.right])
     })]);
 
-    var y = d3.scale.linear().range([height - margins.top, margins.bottom]).domain([d3.min(data, function(d) {
-        return d.perfs;
-    }), d3.max(data, function(d) {
-        return d.perfs;
+    var y = d3.scale.linear().range([height - margins.top, margins.bottom])
     })]);
 
     // Define the axes
