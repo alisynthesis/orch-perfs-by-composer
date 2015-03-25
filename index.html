@@ -1,181 +1,101 @@
-<html lang="en">
- 
-<head>
- 
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
- 
-    <link href="http://getbootstrap.com/examples/justified-nav/justified-nav.css" rel="stylesheet">
- 
-    <style>
-        .axis path {
-            fill: none;
-            stroke: #777;
-            shape-rendering: crispEdges;
-        }
-        .axis text {
-            font-family: Lato;
-            font-size: 13px;
-        }
-        .legend {
-            font-size: 14px;
-            font-weight:bold;
-        }
-    </style>
- 
-</head>
- 
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style> /* set the CSS */
+
+body { font: 12px Arial;}
+
+path { 
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+</style>
 <body>
- 
-    <div class="container">
- 
-        <div class="jumbotron">      	
- 			<svg id="visualisation" width="1000" height="500"></svg>
-            <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-            <script>
-                function InitChart() {
-                    var data = [{
-                        "Client": "ABC",
-                        "sale": "202",
-                        "year": "2000"
-                    }, {
-                        "Client": "ABC",
-                        "sale": "215",
-                        "year": "2002"
-                    }, {
-                        "Client": "ABC",
-                        "sale": "179",
-                        "year": "2004"
-                    }, {
-                        "Client": "ABC",
-                        "sale": "199",
-                        "year": "2006"
-                    }, {
-                        "Client": "ABC",
-                        "sale": "134",
-                        "year": "2008"
-                    }, {
-                        "Client": "ABC",
-                        "sale": "176",
-                        "year": "2010"
-                    }, {
-                        "Client": "XYZ",
-                        "sale": "100",
-                        "year": "2000"
-                    }, {
-                        "Client": "XYZ",
-                        "sale": "215",
-                        "year": "2002"
-                    }, {
-                        "Client": "XYZ",
-                        "sale": "179",
-                        "year": "2004"
-                    }, {
-                        "Client": "XYZ",
-                        "sale": "199",
-                        "year": "2006"
-                    }, {
-                        "Client": "XYZ",
-                        "sale": "134",
-                        "year": "2008"
-                    }, {
-                        "Client": "XYZ",
-                        "sale": "176",
-                        "year": "2013"
-                    }];
 
-                    var dataGroup = d3.nest()
-                        .key(function(d) {
-                            return d.Client;
-                        })
-                        .entries(data);
+<!-- load the d3.js library -->    
+<script src="http://d3js.org/d3.v3.min.js"></script>
 
-                    var vis = d3.select("#visualisation"),
-                        WIDTH = 1000,
-                        HEIGHT = 500,
-                        MARGINS = {
-                            top: 50,
-                            right: 20,
-                            bottom: 50,
-                            left: 50
-                        },
+<script>
 
-                        lSpace = WIDTH/dataGroup.length;
+// Set the dimensions of the canvas / graph
+var margin = {top: 30, right: 20, bottom: 30, left: 50},
+    width = 600 - margin.left - margin.right,
+    height = 270 - margin.top - margin.bottom;
 
-                        xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(data, function(d) {
-                            return d.year;
-                        }), d3.max(data, function(d) {
-                            return d.year;
-                        })]),
+// Parse the date / time
+var parseDate = d3.time.format("%b %Y").parse; 
 
-                        yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(data, function(d) {
-                            return d.sale;
-                        }), d3.max(data, function(d) {
-                            return d.sale;
-                        })]),
+// Set the ranges
+var x = d3.time.scale().range([0, width]);
+var y = d3.scale.linear().range([height, 0]);
 
-                        xAxis = d3.svg.axis()
-                        .scale(xScale),
+// Define the axes
+var xAxis = d3.svg.axis().scale(x)
+    .orient("bottom").ticks(5);
 
-                        yAxis = d3.svg.axis()
-                        .scale(yScale)
-                        .orient("left");
-                    
+var yAxis = d3.svg.axis().scale(y)
+    .orient("left").ticks(5);
 
-                    vis.append("svg:g")
-                    	.attr("class","axis")
-                    	.attr("transform", "translate(0," + (HEIGHT - MARGINS.bottom) + ")")
-                        .call(xAxis);
+// Define the line
+var priceline = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.price); });
+    
+// Adds the svg canvas
+var svg = d3.select("body")
+    .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+        .attr("transform", 
+              "translate(" + margin.left + "," + margin.top + ")");
 
-                    vis.append("svg:g")
-                    	.attr("class","axis")
-                    	.attr("transform", "translate(" + (MARGINS.left) + ",0)")
-                    	.call(yAxis);
+// Get the data
+d3.csv("stocks.csv", function(error, data) {
+    data.forEach(function(d) {
+        d.date = parseDate(d.date);
+        d.price = +d.price;
+    });
 
-            		var lineGen = d3.svg.line()
-            			.x(function(d) {
-            				return xScale(d.year);
-            			})
-            			.y(function(d) {
-            				return yScale(d.sale);
-            			})
-            			.interpolate("basis");
+    // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.date; }));
+    y.domain([0, d3.max(data, function(d) { return d.price; })]); 
 
-        			
-                    dataGroup.forEach(function(d, i) {
-                        vis.append('svg:path')
-                            .attr('d', lineGen(d.values))
-                            .attr('stroke', function(d, j) {
-                                return "hsl(" + Math.random() * 360 + ",100%,50%)";
-                            })
-                            .attr('stroke-width', 2)
-                            .attr('id', 'line_' + d.key)
-                            .attr('fill', 'none');
+    // Nest the entries by symbol
+    var dataNest = d3.nest()
+        .key(function(d) {return d.symbol;})
+        .entries(data);
 
-                        vis.append("text")
-                            .attr("x", (lSpace / 2) + i * lSpace)
-                            .attr("y", HEIGHT)
-                            .style("fill", "black")
-                            .attr("class", "legend")
-                            .on('click', function() {
-                                var active = d.active ? false : true;
-                                var opacity = active ? 0 : 1;
+    // Loop through each symbol / key
+    dataNest.forEach(function(d) {
 
-                                d3.select("#line_"+d.key).style("opacity", opacity);
+        svg.append("path")
+            .attr("class", "line")
+            .attr("d", priceline(d.values)); 
 
-                                d.active = active;
-                            })
-                            .text(d.key);
+    });
 
-                    });
+    // Add the X Axis
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
 
-				}
+    // Add the Y Axis
+    svg.append("g")
+        .attr("class", "y axis")
+        .call(yAxis);
 
-				InitChart();
-			</script>
-        </div>
- 
-    </div>
- 
+});
+
+</script>
 </body>
- 
-</html>
