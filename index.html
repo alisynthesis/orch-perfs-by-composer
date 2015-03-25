@@ -61,7 +61,7 @@ var svg = d3.select("body")
 d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
     data.forEach(function(d) {
   d.year = +d.year;
-  d.price = +d.price;
+  d.perfs = +d.perfs;
     });
 
     // Scale the range of the data
