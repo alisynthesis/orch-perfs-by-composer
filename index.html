@@ -38,15 +38,6 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
         .key(function(d) {return d.composerlast;})
         .entries(data);
 
-    // Loop through each symbol / key
-    dataNest.forEach(function(d) {
-
-        svg.append("path")
-            .attr("class", "line")
-            .attr("d", priceline(d.values)); 
-
-    });
-
     // Set the dimensions of the canvas / graph
     var margin = {top: 30, right: 20, bottom: 30, left: 50},
         width = 600 - margin.left - margin.right,
@@ -76,6 +67,15 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
         .x(function(d) { return x(d.year); })
         .y(function(d) { return y(d.perfs); })
         .interpolate("basis");
+
+    // Loop through each symbol / key
+    dataNest.forEach(function(d) {
+
+        svg.append("path")
+            .attr("class", "line")
+            .attr("d", priceline(d.values)); 
+
+    });
         
     // Adds the svg canvas
     var svg = d3.select("body")
