@@ -28,21 +28,6 @@ path {
 
 // Get the data
 d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
-    
-    // Nest the entries by symbol
-    var dataNest = d3.nest()
-        .key(function(d) {return d.composerlast;})
-        .entries(data);
-
-    // Loop through each symbol / key
-    dataNest.forEach(function(d) {
-
-        svg.append("path")
-            .attr("class", "line")
-            .attr("d", priceline(d.values)); 
-
-    });
-
     data.forEach(function(d) {
         d.perfs = +d.perfs;
         d.year = +d.year;
@@ -85,6 +70,20 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
     // Scale the range of the data
     x.domain(d3.extent(data, function(d) { return d.year; }));
     y.domain([0, d3.max(data, function(d) { return d.perfs; })]);  
+
+    // Nest the entries by symbol
+    var dataNest = d3.nest()
+        .key(function(d) {return d.composerlast;})
+        .entries(data);
+
+    // Loop through each symbol / key
+    dataNest.forEach(function(d) {
+
+        svg.append("path")
+            .attr("class", "line")
+            .attr("d", priceline(d.values)); 
+
+    });
 
     // Add the X Axis
     svg.append("g")
