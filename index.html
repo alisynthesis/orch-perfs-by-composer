@@ -69,11 +69,11 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
     // Adds the svg canvas
     var svg = d3.select("body")
         .append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
+            .attr("width", width + MARGINS.left + MARGINS.right)
+            .attr("height", height + MARGINS.top + MARGINS.bottom)
         .append("g")
             .attr("transform", 
-                  "translate(" + margin.left + "," + margin.top + ")");
+                  "translate(" + MARGINS.left + "," + MARGINS.top + ")");
 
 
     // Scale the range of the data
