@@ -69,8 +69,8 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
     // Adds the svg canvas
     var svg = d3.select("body")
         .append("svg")
-            .attr("width", width + MARGINS.left + MARGINS.right)
-            .attr("height", height + MARGINS.top + MARGINS.bottom)
+            .attr("width", WIDTH + MARGINS.left + MARGINS.right)
+            .attr("height", HEIGHT + MARGINS.top + MARGINS.bottom)
         .append("g")
             .attr("transform", 
                   "translate(" + MARGINS.left + "," + MARGINS.top + ")");
@@ -97,7 +97,7 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
     // Add the X Axis
     svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
+        .attr("transform", "translate(0," + HEIGHT + ")")
         .call(xAxis);
 
     // Add the Y Axis
