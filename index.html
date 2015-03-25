@@ -60,7 +60,7 @@ var svg = d3.select("body")
 // Get the data
 d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
     data.forEach(function(d) {
-  d.date = parseDate(d.year);
+  d.year = +d.year;
   d.price = +d.price;
     });
 
