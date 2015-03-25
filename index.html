@@ -60,19 +60,18 @@ var svg = d3.select("body")
               "translate(" + margin.left + "," + margin.top + ")");
 
 // Get the data
-d3.csv("stocks.csv", function(error, data) {
+d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
     data.forEach(function(d) {
-        d.date = parseDate(d.date);
-        d.price = +d.price;
+        d.perfs = +d.perfs;
     });
 
     // Scale the range of the data
-    x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain([0, d3.max(data, function(d) { return d.price; })]); 
+    x.domain(d3.extent(data, function(d) { return d.year; }));
+    y.domain([0, d3.max(data, function(d) { return d.perfs; })]); 
 
     // Nest the entries by symbol
     var dataNest = d3.nest()
-        .key(function(d) {return d.symbol;})
+        .key(function(d) {return d.composerlast;})
         .entries(data);
 
     // Loop through each symbol / key
