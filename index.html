@@ -48,7 +48,8 @@ var yAxis = d3.svg.axis().scale(y)
 // Define the line
 var priceline = d3.svg.line()
     .x(function(d) { return x(d.year); })
-    .y(function(d) { return y(d.perfs); });
+    .y(function(d) { return y(d.perfs); })
+    .interpolate("basis");
     
 // Adds the svg canvas
 var svg = d3.select("body")
