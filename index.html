@@ -34,9 +34,9 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
     });
 
     // Set the dimensions of the canvas / graph
-    var margin = {top: 30, right: 20, bottom: 30, left: 50},
-        width = 600 - margin.left - margin.right,
-        height = 270 - margin.top - margin.bottom;
+    var MARGINS = {top: 30, right: 20, bottom: 30, left: 50},
+        WIDTH = 600 - margin.left - margin.right,
+        HEIGHT = 270 - margin.top - margin.bottom;
 
     // Set the ranges
     // var x = d3.scale.linear().range([0, width]);
