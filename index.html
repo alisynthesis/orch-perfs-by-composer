@@ -34,21 +34,21 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
     });
 
     // Set the dimensions of the canvas / graph
-    var MARGINS = {top: 30, right: 20, bottom: 30, left: 50},
-        WIDTH = 600 - MARGINS.left - MARGINS.right,
-        HEIGHT = 270 - MARGINS.top - MARGINS.bottom;
+    var margins = {top: 30, right: 20, bottom: 30, left: 50},
+        width = 600 - margins.left - margins.right,
+        height = 270 - margins.top - margins.bottom;
 
     // Set the ranges
     // var x = d3.scale.linear().range([0, width]);
     // var y = d3.scale.linear().range([height, 0]);
 
-    var xScale = d3.scale.linear().range([MARGINS.left, WIDTH - MARGINS.right]).domain([d3.min(data, function(d) {
+    var xScale = d3.scale.linear().range([margins.left, width - margins.right]).domain([d3.min(data, function(d) {
         return d.year;
     }), d3.max(data, function(d) {
         return d.year;
     })]);
 
-    var yScale = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([d3.min(data, function(d) {
+    var yScale = d3.scale.linear().range([height - margins.top, margins.bottom]).domain([d3.min(data, function(d) {
         return d.perfs;
     }), d3.max(data, function(d) {
         return d.perfs;
@@ -69,11 +69,11 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
     // Adds the svg canvas
     var svg = d3.select("body")
         .append("svg")
-            .attr("width", WIDTH + MARGINS.left + MARGINS.right)
-            .attr("height", HEIGHT + MARGINS.top + MARGINS.bottom)
+            .attr("width", width + margins.left + margins.right)
+            .attr("height", height + margins.top + margins.bottom)
         .append("g")
             .attr("transform", 
-                  "translate(" + MARGINS.left + "," + MARGINS.top + ")");
+                  "translate(" + margins.left + "," + margins.top + ")");
 
 
     // Scale the range of the data
@@ -97,7 +97,7 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
     // Add the X Axis
     svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + HEIGHT + ")")
+        .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
 
     // Add the Y Axis
