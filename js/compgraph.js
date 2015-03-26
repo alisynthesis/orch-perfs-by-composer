@@ -61,23 +61,28 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
             .attr("class", "line")
             .style("stroke", function() { // add color dynamically
             	return d.color = color(d.key);})
-            .attr("id", 'tag'+d.key.replace(/\s+/g, '')) // assign ID
+            .attr("id", 'line'+d.key.replace(/\s+/g, '')) // assign ID to line
             .attr("d", priceline(d.values));
 
         svg.append("text")
         	.attr("x", (legendSpace/2)+i*legendSpace) // spacing
         	.attr("y", height + (margin.bottom/2)+ 5)
         	.attr("class", "legend") //style the legend
+        	.attr("id", 'legend'+d.key.replace(/\s+/g, '')) // assign ID to legend item
         	.style("fill", function() {
         		return d.color = color(d.key);})
         	.on("click", function() {
         		//Determine if current line is visible
         		var active = d.active ? false : true,
         		newOpacity = active ? 0 : 1;
+        		newColor = active ? "#bbbbbb" : d.color ;
         		// Hide or show the elements based on the ID
-        		d3.select("#tag"+d.key.replace(/\s+/g, ''))
-        			.transition().duration(100)
+        		d3.select("#line"+d.key.replace(/\s+/g, ''))
+        			.transition().duration(500)
         			.style("opacity", newOpacity);
+    			d3.select("#legend"+d.key.replace(/\s+/g, ''))
+    				.transition().duration(500)
+    				.style("fill", newColor);
     			// Update whether or not the elements are active
     			d.active = active;
         	})
