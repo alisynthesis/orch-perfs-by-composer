@@ -78,11 +78,15 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
         .key(function(d) {return d.composerlast;})
         .entries(data);
 
+    var color = d3.scale.category10();  // set the colour scale
+
     // Loop through each symbol / key
     dataNest.forEach(function(d) {
 
         svg.append("path")
             .attr("class", "line")
+            .style("stroke", function() { // add color dynamically
+            	return d.color = color(d.key);})
             .attr("d", priceline(d.values)); 
 
     });
