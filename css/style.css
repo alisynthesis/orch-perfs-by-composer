@@ -1,4 +1,9 @@
-body { font: 12px Arial;}
+body { 
+	font: 12px Arial;
+	height:100%;
+	margin:0;
+	overflow:hidden;
+}
 
 path { 
     stroke: steelblue;
