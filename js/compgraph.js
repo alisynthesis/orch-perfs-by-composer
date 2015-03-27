@@ -1,5 +1,5 @@
 // Set the dimensions of the canvas / graph
-var margin = {top: 30, right: 50, bottom: 70, left: 50},
+var margin = {top: 30, right: 200, bottom: 70, left: 50},
     width = 1000 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
@@ -52,7 +52,7 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
 
     var color = d3.scale.category10();  // set the colour scale
 
-    legendSpace = width/dataNest.length; // spacing for legend
+    legendSpace = height/dataNest.length; // spacing for legend
 
     // Loop through each symbol / key
     dataNest.forEach(function(d,i) {
@@ -65,8 +65,8 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
             .attr("d", priceline(d.values));
 
         svg.append("text")
-            .attr("x", (legendSpace/2)+i*legendSpace) // spacing
-            .attr("y", height + (margin.bottom/2)+ 5)
+            .attr("y", (legendSpace/2)+i*legendSpace) // spacing
+            .attr("x", width + (margin.right/2)+ 5)
             .attr("class", "legend") //style the legend
             .attr("id", 'legend'+d.key.replace(/\s+/g, '')) // assign ID to legend item
             .style("fill", function() {
