@@ -1,8 +1,7 @@
 body { 
-	font: 12px Arial;
 	height:100%;
 	margin:0;
-	overflow:hidden;
+	padding-top:0;
 }
 
 path { 
@@ -24,4 +23,12 @@ path {
 	font-weight:bold;
 	text-anchor:middle;
 	cursor: pointer;
+}
+
+.navbar-brand {
+	padding:10px 15px;
+}
+
+.navbar-brand img {
+	max-height:40px;
 }
