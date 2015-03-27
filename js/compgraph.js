@@ -64,9 +64,9 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
             .attr("id", 'line'+d.key.replace(/\s+/g, '')) // assign ID to line
             .attr("d", priceline(d.values));
 
-        svg.append("text")
-            .attr("y", (legendSpace/2)+i*legendSpace) // spacing
+        svg.append("text")        
             .attr("x", width + (margin.right/2)+ 5)
+            .attr("y", (legendSpace/2)+i*legendSpace) // spacing
             .attr("class", "legend") //style the legend
             .attr("id", 'legend'+d.key.replace(/\s+/g, '')) // assign ID to legend item
             .style("fill", function() {
