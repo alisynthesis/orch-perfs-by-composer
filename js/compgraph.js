@@ -1,7 +1,7 @@
 // Set the dimensions of the canvas / graph
 var margin = {top: 30, right: 200, bottom: 50, left: 60},
-    width = 1000 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = 1000 - (margin.left + margin.right),
+    height = 500 - (margin.top + margin.bottom);
 
 // Set the ranges
 var x = d3.scale.linear().range([0, width]);
