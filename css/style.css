@@ -25,6 +25,10 @@ path {
 	cursor: pointer;
 }
 
+.axis-label {
+	font-size:16px;
+}
+
 .navbar-brand {
 	padding:10px 15px;
 }
