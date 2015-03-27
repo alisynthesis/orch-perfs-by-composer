@@ -1,11 +1,14 @@
 // Set the dimensions of the canvas / graph
-var margin = {top: 30, right: 200, bottom: 50, left: 60},
-    width = 1000 - (margin.left + margin.right),
-    height = 500 - (margin.top + margin.bottom);
+var canvasWidth = 1000;
+var canvasHeight = 500;
+
+var margin = {top: 30, right: 200, bottom: 50, left: 60};
+var boxWidth = canvasWidth - (margin.left + margin.right);
+var boxHeight = canvasHeight - (margin.top + margin.bottom);
 
 // Set the ranges
-var x = d3.scale.linear().range([0, width]);
-var y = d3.scale.linear().range([height, 0]);
+var x = d3.scale.linear().range([0, boxWidth]);
+var y = d3.scale.linear().range([boxHeight, 0]);
 
 // Define the axes
 var xAxis = d3.svg.axis().scale(x)
@@ -22,8 +25,8 @@ var priceline = d3.svg.line()
     
 // Adds the svg canvas
 var svg = d3.select("#visualization")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
+    .attr("width", boxWidth + margin.left + margin.right)
+    .attr("height", boxHeight + margin.top + margin.bottom)
     .append("g")
         .attr("transform", 
               "translate(" + margin.left + "," + margin.top + ")");
@@ -51,7 +54,7 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
 
     var color = d3.scale.category10();  // set the colour scale
 
-    legendSpace = height/dataNest.length; // spacing for legend
+    legendSpace = boxHeight/dataNest.length; // spacing for legend
 
     // Loop through each symbol / key
     dataNest.forEach(function(d,i) {
@@ -64,7 +67,7 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
             .attr("d", priceline(d.values));
 
         svg.append("text")        
-            .attr("x", width + (margin.right/2)+ 5)
+            .attr("x", boxWidth + (margin.right/2)+ 5)
             .attr("y", (legendSpace/2)+i*legendSpace) // spacing
             .attr("class", "legend") //style the legend
             .attr("id", 'legend'+d.key.replace(/\s+/g, '')) // assign ID to legend item
@@ -92,7 +95,7 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
     // Add the X Axis
     svg.append("g")
         .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
+        .attr("transform", "translate(0," + boxHeight + ")")
         .call(xAxis);
 
     // Add the Y Axis
@@ -101,15 +104,15 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
         .call(yAxis);
 
     svg.append("text")
-        .attr("x", width/2)
-        .attr("y", height + margin.bottom)
+        .attr("x", boxWidth/2)
+        .attr("y", boxHeight + margin.bottom)
         .attr("class", "x-label, axis-label")
         .style("text-anchor", "middle")
         .text("Year of Performances");
 
     svg.append("text")
         .attr("transform", "rotate(-90)")
-        .attr("x", 0 - (height / 2))
+        .attr("x", 0 - (boxHeight / 2))
         .attr("y", 0 - margin.left)
         .attr("dy", "1em")
         .attr("class", "y-label, axis-label")
