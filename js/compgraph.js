@@ -7,20 +7,20 @@ var boxWidth = canvasWidth - (margin.left + margin.right);
 var boxHeight = canvasHeight - (margin.top + margin.bottom);
 
 // Set the ranges
-var x = d3.scale.linear().range([0, boxWidth]);
-var y = d3.scale.linear().range([boxHeight, 0]);
+var xScale = d3.scale.linear().range([0, boxWidth]);
+var yScale = d3.scale.linear().range([boxHeight, 0]);
 
 // Define the axes
-var xAxis = d3.svg.axis().scale(x)
+var xAxis = d3.svg.axis().scale(xScale)
     .orient("bottom").ticks(5).tickFormat(d3.format("d"));
 
-var yAxis = d3.svg.axis().scale(y)
+var yAxis = d3.svg.axis().scale(yScale)
     .orient("left");
 
 // Define the line
 var priceline = d3.svg.line()
-    .x(function(d) { return x(d.year); })
-    .y(function(d) { return y(d.perfs); })
+    .x(function(d) { return xScale(d.year); })
+    .y(function(d) { return yScale(d.perfs); })
     .interpolate("basis");
     
 // Adds the svg canvas
@@ -40,13 +40,8 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
     });
 
     // Scale the range of the data
-    x.domain(d3.extent(data, function(d) { return d.year; }));
-    y.domain(d3.extent(data, function(d) { return d.perfs; }));
-    // y.domain([d3.min(data, function(d) {
-    //     return d.perfs;
-    // }), d3.max(data, function(d) {
-    //     return d.perfs;
-    // })]);
+    xScale.domain(d3.extent(data, function(d) { return d.year; }));
+    yScale.domain(d3.extent(data, function(d) { return d.perfs; }));
 
     // Nest the entries by symbol
     var dataNest = d3.nest()
