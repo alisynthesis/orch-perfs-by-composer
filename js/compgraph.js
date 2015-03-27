@@ -57,10 +57,13 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
     // Loop through each symbol / key
     dataNest.forEach(function(d,i) {
 
+        var composerColor = color(d.key);
+        d.color = composerColor; 
+
         svg.append("path")
             .attr("class", "line")
             .style("stroke", function() { // add color dynamically
-                return d.color = color(d.key);})
+                return d.color;})
             .attr("id", 'line'+d.key.replace(/\s+/g, '')) // assign ID to line
             .attr("d", composerLine(d.values));
 
@@ -70,7 +73,7 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
             .attr("class", "legend") //style the legend
             .attr("id", 'legend'+d.key.replace(/\s+/g, '')) // assign ID to legend item
             .style("fill", function() {
-                return d.color = color(d.key);})
+                return d.color;})
             .on("click", function() {
                 //Determine if current line is visible
                 var active = d.active ? false : true,
