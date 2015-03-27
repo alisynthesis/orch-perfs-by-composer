@@ -1,6 +1,6 @@
 // Set the dimensions of the canvas / graph
-var canvasWidth = 1000;
-var canvasHeight = 500;
+var canvasWidth = parseInt(d3.select("#visualization").style("width"));
+var canvasHeight = parseInt(d3.select("#visualization").style("height"));
 
 var margin = {top: 30, right: 200, bottom: 50, left: 60};
 var boxWidth = canvasWidth - (margin.left + margin.right);
