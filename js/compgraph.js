@@ -1,5 +1,5 @@
 // Set the dimensions of the canvas / graph
-var margin = {top: 30, right: 200, bottom: 70, left: 50},
+var margin = {top: 30, right: 200, bottom: 40, left: 50},
     width = 1000 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
@@ -100,5 +100,21 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
     svg.append("g")
         .attr("class", "y axis")
         .call(yAxis);
+
+    svg.append("text")
+        .attr("x", width/2)
+        .attr("y", height + margin.bottom)
+        .attr("class", "x-label, axis-label")
+        .style("text-anchor", "middle")
+        .text("Year");
+
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("x", 0 - (height / 2))
+        .attr("y", 0 - margin.left)
+        .attr("dy", "1em")
+        .attr("class", "y-label, axis-label")
+        .style("text-anchor", "middle")
+        .text("Number of Performances");
 
 });
