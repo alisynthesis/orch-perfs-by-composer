@@ -52,7 +52,7 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
 
     var color = d3.scale.category10();  // set the colour scale
 
-    legendSpace = boxHeight/dataNest.length; // spacing for legend
+    var legendSpace = boxHeight/dataNest.length; // spacing for legend
 
     // Loop through each symbol / key
     dataNest.forEach(function(d,i) {
@@ -89,6 +89,7 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
                 // Update whether or not the elements are active
                 d.active = active;
             })
+
             .text(d.key);
 
     });
