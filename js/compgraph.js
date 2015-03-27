@@ -12,13 +12,15 @@ var yScale = d3.scale.linear().range([boxHeight, 0]);
 
 // Define the axes
 var xAxis = d3.svg.axis().scale(xScale)
-    .orient("bottom").ticks(5).tickFormat(d3.format("d"));
+    .orient("bottom")
+    .ticks(5)
+    .tickFormat(d3.format("d"));
 
 var yAxis = d3.svg.axis().scale(yScale)
     .orient("left");
 
 // Define the line
-var priceline = d3.svg.line()
+var composerLine = d3.svg.line()
     .x(function(d) { return xScale(d.year); })
     .y(function(d) { return yScale(d.perfs); })
     .interpolate("basis");
@@ -60,7 +62,7 @@ d3.csv("am-orch-rep-1842-1970-top-five-perf-count.csv", function(error, data) {
             .style("stroke", function() { // add color dynamically
                 return d.color = color(d.key);})
             .attr("id", 'line'+d.key.replace(/\s+/g, '')) // assign ID to line
-            .attr("d", priceline(d.values));
+            .attr("d", composerLine(d.values));
 
         svg.append("text")        
             .attr("x", boxWidth + (margin.right/2)+ 5)
