@@ -25,8 +25,8 @@ var priceline = d3.svg.line()
     
 // Adds the svg canvas
 var svg = d3.select("#visualization")
-    .attr("width", boxWidth + margin.left + margin.right)
-    .attr("height", boxHeight + margin.top + margin.bottom)
+    .attr("width", canvasWidth)
+    .attr("height", canvasHeight)
     .append("g")
         .attr("transform", 
               "translate(" + margin.left + "," + margin.top + ")");
